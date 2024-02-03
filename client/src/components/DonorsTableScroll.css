@@ -1,0 +1,13 @@
+table {
+  border: 1px solid black;
+}
+
+th {
+  position: sticky;
+  top: -1px;
+}
+
+.table-wrapper {
+  max-height: 460px;
+  overflow-y: scroll;
+}
