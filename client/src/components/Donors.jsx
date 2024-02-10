@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import './DonorsTableScroll.css'
+import { Link, useNavigate } from 'react-router-dom';import './css/DonorsTableScroll.css'
 
 const endpoint = "http://localhost:8000/api";
 
@@ -9,6 +8,7 @@ const Donors = () => {
   const [donors, setDonors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedBloodType, setSelectedBloodType] = useState('');
+  const navigate = useNavigate()
 
   useEffect(() => {
     getAllDonors();
@@ -42,12 +42,58 @@ const Donors = () => {
 
   const bloodTypes = Array.from(new Set(donors.map((donor) => donor.blood)));
 
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const logout = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      // console.log("Token:", token)
+      await axios.post(`${endpoint}/logout`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      localStorage.removeItem('token')
+      navigate("/login")
+    } catch (error) {
+      console.error('Error al desloguearse:', error);
+    }
+  };
+  
+
   return (
     <div className='container mt-3'>
       <div className='d-grid gap-2'>
-        <Link to="/add" className='btn btn-success btn-lg mt-2 mb-2 text-white'>
+        <div className='d-flex justify-content-between'>
+        <Link to="/add" className='btn btn-success text-white'>
           Nuevo Donador
         </Link>
+        <div className="btn-group">
+          <button type="button" className="btn btn-primary text-white">Cuenta</button>
+          <button
+            className="btn btn-danger dropdown-toggle dropdown-toggle-split"
+            type="button"
+            id="dropdownMenuReference"
+            onClick={toggleDropdown}
+            data-bs-toggle="dropdown"
+            aria-expanded={isOpen ? "true" : "false"}
+          >
+            <span className="visually-hidden">Toggle Dropdown</span>
+          </button>
+          <ul className={`dropdown-menu ${isOpen ? 'show' : ''}`} aria-labelledby="dropdownMenuReference">
+            <li><Link className="dropdown-item" href="#">Salir</Link></li>
+            <li><Link className="dropdown-item" href="#">Configuración</Link></li>
+            <li><Link className="dropdown-item" href="#">Something else here</Link></li>
+            <li><hr className="dropdown-divider" /></li>
+            <li><Link className="dropdown-item" onClick={logout}>Salir</Link></li>
+          </ul>
+          </div>
+        </div>
         <input
           type="text"
           placeholder='Buscar 🔍'
@@ -68,8 +114,6 @@ const Donors = () => {
           </select>
         </div>
       </div>
-
-
 
 
       <div className='table-wrapper'>

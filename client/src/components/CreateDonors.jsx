@@ -22,8 +22,7 @@ const CreateDonors = () => {
   const store = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(endpoint, { name, dni, number, blood, last });
-      console.log(response.data);
+      await axios.post(endpoint, { name, dni, number, blood, last });
       navigate('/');
     } catch (error) {
       console.log(error.response.data.errors);
@@ -39,7 +38,7 @@ const CreateDonors = () => {
   return (
     <div className='container mt-5'>
       <h3>Nuevo donante: {name} - {dni}</h3>
-      <form onSubmit={store} className=''>
+      <form onSubmit={store}>
         <div className="col-12">
           <div className="row">
             <div className="col-6">
