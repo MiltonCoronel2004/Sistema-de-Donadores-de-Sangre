@@ -9,9 +9,10 @@ const Donors = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedBloodType, setSelectedBloodType] = useState('');
   const navigate = useNavigate()
-
+  
   useEffect(() => {
     getAllDonors();
+
   }, []);
 
   const getAllDonors = async () => {
@@ -60,6 +61,7 @@ const Donors = () => {
       });
       localStorage.removeItem('token')
       navigate("/login")
+      window.location.reload();
     } catch (error) {
       console.error('Error al desloguearse:', error);
     }
