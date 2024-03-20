@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+
 
 
 class LoginController extends Controller
@@ -50,7 +49,7 @@ class LoginController extends Controller
     public function logout()
     {
         auth()->logout();
-        
+
         return response()->json(['message' => 'Successfully logged out']);
     }
 
@@ -103,23 +102,5 @@ class LoginController extends Controller
         return response()->json([$user], 201);
     }
 
-    // public function login(Request $request) {
-    //     $validatedData = $request->validate([
-    //         'user' => 'required|exists:users,name',
-    //         'pass' => 'required|min:6',
-    //     ], [
-    //         'user.required' => 'El usuario es necesario.',
-    //         'user.exists' => 'El usuario no existe.',
-    //         'pass.required' => 'La contraseña es necesaria.',
-    //         'pass.min' => 'La contraseña debe tener al menos :min caracteres.',
-    //     ]);
 
-
-
-    // }
-
-
-    // public function logout(Request $request) {
-
-    // }
 }

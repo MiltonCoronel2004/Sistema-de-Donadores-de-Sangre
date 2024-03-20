@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
-import background from '../assets/background.jpg'
+import background from '../assets/bg4.jpg'
 import { Link, useNavigate } from 'react-router-dom';
 
 const endpoint = "http://localhost:8000/api/login"

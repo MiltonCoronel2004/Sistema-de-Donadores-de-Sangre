@@ -12,7 +12,6 @@ const Donors = () => {
   
   useEffect(() => {
     getAllDonors();
-
   }, []);
 
   const getAllDonors = async () => {
@@ -69,97 +68,99 @@ const Donors = () => {
   
 
   return (
-    <div className='container mt-3'>
-      <div className='d-grid gap-2'>
-        <div className='d-flex justify-content-between'>
-        <Link to="/add" className='btn btn-success text-white'>
-          Nuevo Donador
-        </Link>
-        <div className="btn-group">
-          <button type="button" className="btn btn-primary text-white">Cuenta</button>
-          <button
-            className="btn btn-danger dropdown-toggle dropdown-toggle-split"
-            type="button"
-            id="dropdownMenuReference"
-            onClick={toggleDropdown}
-            data-bs-toggle="dropdown"
-            aria-expanded={isOpen ? "true" : "false"}
-          >
-            <span className="visually-hidden">Toggle Dropdown</span>
-          </button>
-          <ul className={`dropdown-menu ${isOpen ? 'show' : ''}`} aria-labelledby="dropdownMenuReference">
-            <li><Link className="dropdown-item" href="#">Salir</Link></li>
-            <li><Link className="dropdown-item" href="#">Configuración</Link></li>
-            <li><Link className="dropdown-item" href="#">Something else here</Link></li>
-            <li><hr className="dropdown-divider" /></li>
-            <li><Link className="dropdown-item" onClick={logout}>Salir</Link></li>
-          </ul>
+    <div>
+      <div className='container'>
+        <div className='d-grid gap-2 pt-3'>
+          <div className='d-flex justify-content-between'>
+          <Link to="/add" className='btn btn-success text-white'>
+            Nuevo Donador
+          </Link>
+          <div className="btn-group">
+            <button type="button" className="btn btn-primary text-white">Cuenta</button>
+            <button
+              className="btn btn-danger dropdown-toggle dropdown-toggle-split"
+              type="button"
+              id="dropdownMenuReference"
+              onClick={toggleDropdown}
+              data-bs-toggle="dropdown"
+              aria-expanded={isOpen ? "true" : "false"}
+            >
+              <span className="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <ul className={`dropdown-menu ${isOpen ? 'show' : ''}`} aria-labelledby="dropdownMenuReference">
+              <li><Link className="dropdown-item" href="#">Salir</Link></li>
+              <li><Link className="dropdown-item" href="#">Configuración</Link></li>
+              <li><Link className="dropdown-item" href="#">Something else here</Link></li>
+              <li><hr className="dropdown-divider" /></li>
+              <li><Link className="dropdown-item" onClick={logout}>Salir</Link></li>
+            </ul>
+            </div>
+          </div>
+          <input
+            type="text"
+            placeholder='Buscar 🔍'
+            className='text-center'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <div className='text-center mb-2'>
+            <label>Filtrar:</label>
+            {' '} 
+            <select value={selectedBloodType} onChange={(e) => setSelectedBloodType(e.target.value)}>
+              <option value="">Todos</option>
+              {bloodTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
-        <input
-          type="text"
-          placeholder='Buscar 🔍'
-          className='text-center'
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <div className='text-center mb-2'>
-          <label>Filtrar:</label>
-          {' '} 
-          <select value={selectedBloodType} onChange={(e) => setSelectedBloodType(e.target.value)}>
-            <option value="">Todos</option>
-            {bloodTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
 
 
-      <div className='table-wrapper'>
-      <table className='table text-center table-striped'>
+        <div className='table-wrapper'>
+        <table className='table text-center table-striped' >
 
-        <thead className='bg-primary text-white'>
-          <tr>
-            <th>Nombre</th>
-            <th>DNI</th>
-            <th>Número</th>
-            <th>Grupo Sanguíneo</th>
-            <th>Última Donación</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {filteredDonors.map((donor) => (
-            <tr key={donor.id}>
-              <td style={{width: '225px'}}>{donor.name}</td>
-              <td style={{width: '100px'}}>{donor.dni}</td>
-              <td style={{width: '150px'}}>{donor.number}</td>
-              <td style={{width: '150px'}}>{donor.blood}</td>
-              <td style={{width: '160px'}}>{formatDate(donor.last)}</td>
-
-              <td>
-                <Link to={`edit/${donor.id}`} className='btn btn-warning' style={{ width: '100px' }}>
-                  Editar
-                </Link>
-                {' '}
-                <button onClick={() => deleteDonor(donor.id)} className='btn btn-danger' style={{ width: '100px' }}>
-                  Eliminar
-                </button>
-              </td>
-
+          <thead className='text-white'>
+            <tr>
+              <th>Nombre</th>
+              <th>DNI</th>
+              <th>Número</th>
+              <th>Grupo Sanguíneo</th>
+              <th>Última Donación</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
+          </thead>
 
-      </table>
+          <tbody>
+            {filteredDonors.map((donor) => (
+              <tr key={donor.id}>
+                <td style={{width: '225px'}}>{donor.name}</td>
+                <td style={{width: '100px'}}>{donor.dni}</td>
+                <td style={{width: '150px'}}>{donor.number}</td>
+                <td style={{width: '150px'}}>{donor.blood}</td>
+                <td style={{width: '160px'}}>{formatDate(donor.last)}</td>
 
+                <td>
+                  <Link to={`edit/${donor.id}`} className='btn btn-warning' style={{ width: '100px' }}>
+                    Editar
+                  </Link>
+                  {' '}
+                  <button onClick={() => deleteDonor(donor.id)} className='btn btn-danger' style={{ width: '100px' }}>
+                    Eliminar
+                  </button>
+                </td>
+
+              </tr>
+            ))}
+          </tbody>
+
+        </table>
+
+        </div>
+
+              
       </div>
-
-            
     </div>
   );
 };

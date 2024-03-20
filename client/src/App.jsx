@@ -23,9 +23,7 @@ function App() {
           <Route element={<UnprotectedRoutes auth={token} redirectPath='/'/>}>
           <Route path='/login' element={<Login />}/>
             <Route path='/register' element={<Register />}/>
-          </Route>
-
-    
+          </Route>    
           <Route path='*' element={<NotFoundPage />}/>
         </Routes>
       </BrowserRouter>
